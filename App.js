@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./screens/Login";
+import { GlobalStyles } from "./constants/styles";
 
 const Stack = createNativeStackNavigator();
 
@@ -12,13 +13,13 @@ export default function App() {
       <StatusBar style="light" />
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
-              headerStyle: { backgroundColor: 'black' },
+              headerStyle: { backgroundColor: GlobalStyles.colors.mainColor },
               headerTintColor: "white",
             }}>
           <Stack.Screen
             name="Login"
             component={Login}
-            options={{ title: "Login" }}
+            options={{ title: "" }}
           />
         </Stack.Navigator>
       </NavigationContainer>
