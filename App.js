@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./screens/Login";
 import { GlobalStyles } from "./constants/styles";
+import Register from "./screens/Register";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,11 @@ export default function App() {
             name="Login"
             component={Login}
             options={{ title: "" }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={Register}
+            options={{ title: "Kaydol" }}
           />
         </Stack.Navigator>
       </NavigationContainer>
