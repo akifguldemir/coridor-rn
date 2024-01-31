@@ -3,6 +3,8 @@ import { GlobalStyles } from "../constants/styles";
 import CustomInput from "../components/CustomInput";
 import { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllCities } from "../store/citiesSlice";
 
 const gender = [
   { key: "1", value: "Female" },
