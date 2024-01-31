@@ -1,7 +1,8 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 
-function CustomInput({ style, textInputConfig, placeholder }) {
+function CustomInput({ style, textInputConfig, placeholder, editable }) {
+
   let inputStyles = [styles.input];
 
   if (textInputConfig && textInputConfig.multiline) {
@@ -10,7 +11,7 @@ function CustomInput({ style, textInputConfig, placeholder }) {
 
   return (
     <View style={[styles.inputContainer, style]}>
-      <TextInput placeholder={placeholder} style={inputStyles} {...textInputConfig} />
+      <TextInput editable={editable}  placeholder={placeholder} style={inputStyles} {...textInputConfig} />
     </View>
   );
 }
