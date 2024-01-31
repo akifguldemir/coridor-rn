@@ -89,8 +89,21 @@ function Register() {
           setSelected={(val) => setSelectedGender(val)}
           data={gender}
           save="value"
-          boxStyles={{borderRadius:30, borderColor: GlobalStyles.colors.inputGray, borderWidth: 2 }}
+          boxStyles={{borderRadius:30, borderColor: GlobalStyles.colors.inputGray, borderWidth: 2, marginVertical:8 }}
           dropdownStyles={{borderRadius:30, borderColor: GlobalStyles.colors.inputGray, borderWidth: 2 }}
+          notFoundText={'Bulunamadı'}
+          search={false}
+          placeholder={'Cinsiyet'}
+        />
+        <SelectList
+          setSelected={(val) => setSelectedGender(val)}
+          data={gender}
+          save="value"
+          boxStyles={{borderRadius:30, borderColor: GlobalStyles.colors.inputGray, borderWidth: 2, marginVertical:8 }}
+          dropdownStyles={{borderRadius:30, borderColor: GlobalStyles.colors.inputGray, borderWidth: 2 }}
+          notFoundText={'Bulunamadı'}
+          search={false}
+          placeholder={'Şehir'}
         />
       </View>
     </ScrollView>
