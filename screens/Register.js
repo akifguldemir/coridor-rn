@@ -1,7 +1,13 @@
-import { View, StyleSheet, Image, Text } from "react-native";
+import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 import CustomInput from "../components/CustomInput";
 import { useState } from "react";
+import { SelectList } from "react-native-dropdown-select-list";
+
+const gender = [
+  { key: "1", value: "Female" },
+  { key: "2", value: "Male" },
+];
 
 function Register() {
   const [inputs, setInputs] = useState({
@@ -16,6 +22,7 @@ function Register() {
   });
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
+    console.log(inputIdentifier + "----" + enteredValue);
     setInputs((curInputs) => {
       return {
         ...curInputs,
@@ -23,8 +30,11 @@ function Register() {
       };
     });
   }
+  function setSelectedGender(val) {
+    inputChangedHandler("gender", val);
+  }
   return (
-    <View>
+    <ScrollView>
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
@@ -69,21 +79,21 @@ function Register() {
           }}
         />
         <CustomInput
-          placeholder="gg.aa.yyyy"
-          textInputConfig={{
-            onChangeText: inputChangedHandler.bind(this, "birthdate"),
-            value: inputs.birthdate,
-          }}
-        />
-        <CustomInput
           placeholder="Telefon"
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "phone"),
             value: inputs.phone,
           }}
         />
+        <SelectList
+          setSelected={(val) => setSelectedGender(val)}
+          data={gender}
+          save="value"
+          boxStyles={{borderRadius:30, borderColor: GlobalStyles.colors.inputGray, borderWidth: 2 }}
+          dropdownStyles={{borderRadius:30, borderColor: GlobalStyles.colors.inputGray, borderWidth: 2 }}
+        />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 export default Register;
