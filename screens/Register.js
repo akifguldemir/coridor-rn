@@ -31,11 +31,8 @@ function Register() {
       <Text style={styles.input}>Kaydol</Text>
       <View style={styles.inputContainer}>
         <CustomInput
-          style={styles.rowInput}
-          label="Amount"
           placeholder="E-Posta"
           textInputConfig={{
-            keyboardType: "decimal-pad",
             onChangeText: inputChangedHandler.bind(this, "email"),
             value: inputs.email,
           }}
