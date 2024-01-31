@@ -14,14 +14,18 @@ import { useState } from "react";
 import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
+import CustomInput from "../components/CustomInput";
 
 function Login() {
   const navigation = useNavigation();
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [inputGroup, setInputGroup] = useState({
+  const [inputs, setInputs] = useState({
+    fullName: "",
+    userName: "",
     email: "",
     password: "",
+    birthdate: "",
   });
 
   function handleSubmit() {
@@ -32,13 +36,28 @@ function Login() {
     navigation.navigate("Register");
   }
 
+  function inputChangedHandler(inputIdentifier, enteredValue) {
+    setInputs((curInputs) => {
+      return {
+        ...curInputs,
+        [inputIdentifier]: { value: enteredValue },
+      };
+    });
+  }
+  function inputChangedHandler(inputIdentifier, enteredValue) {
+    setInputs((curInputs) => {
+      return {
+        ...curInputs,
+        [inputIdentifier]: { value: enteredValue },
+      };
+    });
+  }
+
   const goToCoridorSite = (url) => {
     Linking.openURL(url)
       .then((supported) => {
         if (!supported) {
-          console.error("Tarayıcı açılamadı");
         } else {
-          console.log("Tarayıcı başarıyla açıldı");
         }
       })
       .catch((err) => console.error("Hata:", err));
@@ -54,17 +73,23 @@ function Login() {
         <Text style={styles.loginText}>Giriş Yap</Text>
       </View>
       <View style={styles.inputGroup}>
-        <TextInput
+        <CustomInput
           style={styles.input}
-          onChangeText={setInputGroup}
-          value={inputGroup.email}
-          placeholder="E-posta Adresi"
+          placeholder="E-Posta"
+          textInputConfig={{
+            keyboardType: "decimal-pad",
+            onChangeText: inputChangedHandler.bind(this, "email"),
+            value: inputs.email,
+          }}
         />
-        <TextInput
+        <CustomInput
           style={styles.input}
-          onChangeText={setInputGroup}
-          value={inputGroup.password}
           placeholder="Şifre"
+          textInputConfig={{
+            keyboardType: "decimal-pad",
+            onChangeText: inputChangedHandler.bind(this, "password"),
+            value: inputs.password,
+          }}
         />
       </View>
       <Text style={styles.forgotPasswordText}>Şifremi Unuttum</Text>
@@ -158,14 +183,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   input: {
-    height: 40,
     margin: 12,
-    borderWidth: 1,
     padding: 10,
     width: "100%",
     paddingHorizontal: 16,
     borderRadius: 20,
-    borderColor: "grey",
   },
   forgotPasswordText: {
     textAlign: "right",
