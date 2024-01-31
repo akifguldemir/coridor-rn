@@ -1,10 +1,10 @@
-const CITIES = '/cities'
+const GET_CITIES = '/cities'
 import { BaseService } from "./BaseServices"
 
 class CitiesService extends BaseService {
 
     getAllNews(){
-        return this.get(CITIES)
+        return this.get(GET_CITIES)
     }
 }
 
