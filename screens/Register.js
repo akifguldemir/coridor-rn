@@ -2,7 +2,6 @@ import { View, StyleSheet, Image, Text } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 import CustomInput from "../components/CustomInput";
 import { useState } from "react";
-import DatePicker from "react-native-datepicker";
 
 function Register() {
   const [inputs, setInputs] = useState({
