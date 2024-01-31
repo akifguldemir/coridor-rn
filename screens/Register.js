@@ -2,6 +2,7 @@ import { View, StyleSheet, Image, Text } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 import CustomInput from "../components/CustomInput";
 import { useState } from "react";
+import DatePicker from "react-native-datepicker";
 
 function Register() {
   const [inputs, setInputs] = useState({
@@ -10,6 +11,9 @@ function Register() {
     email: "",
     password: "",
     birthdate: "",
+    phone: "",
+    gender: "",
+    cities: "",
   });
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
@@ -31,10 +35,52 @@ function Register() {
       <Text style={styles.input}>Kaydol</Text>
       <View style={styles.inputContainer}>
         <CustomInput
+          placeholder="Ad - Soyad"
+          textInputConfig={{
+            onChangeText: inputChangedHandler.bind(this, "fullName"),
+            value: inputs.fullName,
+          }}
+        />
+        <CustomInput
+          placeholder="Kullanıcı Adı"
+          textInputConfig={{
+            onChangeText: inputChangedHandler.bind(this, "userName"),
+            value: inputs.userName,
+          }}
+        />
+        <CustomInput
           placeholder="E-Posta"
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "email"),
             value: inputs.email,
+          }}
+        />
+        <CustomInput
+          placeholder="Şifre"
+          textInputConfig={{
+            onChangeText: inputChangedHandler.bind(this, "password"),
+            value: inputs.password,
+          }}
+        />
+        <CustomInput
+          placeholder="gg.aa.yyyy"
+          textInputConfig={{
+            onChangeText: inputChangedHandler.bind(this, "birthdate"),
+            value: inputs.birthdate,
+          }}
+        />
+        <CustomInput
+          placeholder="gg.aa.yyyy"
+          textInputConfig={{
+            onChangeText: inputChangedHandler.bind(this, "birthdate"),
+            value: inputs.birthdate,
+          }}
+        />
+        <CustomInput
+          placeholder="Telefon"
+          textInputConfig={{
+            onChangeText: inputChangedHandler.bind(this, "phone"),
+            value: inputs.phone,
           }}
         />
       </View>
