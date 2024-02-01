@@ -44,10 +44,13 @@ function Register() {
   function setSelectedGender(val) {
     inputChangedHandler("gender", val);
   }
-  function handleSubmit(){
-    console.log(inputs)
-    // dispatch(signUp(data))
+  function setSelectedCity(val) {
+    inputChangedHandler("cities", val);
   }
+  function handleSubmit(){
+    dispatch(signUp(inputs))
+  }
+  
   return (
     <ScrollView>
       <View style={styles.logoContainer}>
@@ -120,7 +123,7 @@ function Register() {
           placeholder={"Cinsiyet"}
         />
         <SelectList
-          setSelected={(val) => setSelectedGender(val)}
+          setSelected={(val) => setSelectedCity(val)}
           data={allCities}
           save="value"
           boxStyles={{
