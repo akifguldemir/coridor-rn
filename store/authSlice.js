@@ -52,38 +52,41 @@ const authSlice = createSlice({
       return AuthService.signUp(formData)
     },
     login(state, action) {
-      // AuthService.login fonksiyonunu buraya entegre etmek gerekebilir.
-    },
-    questlogin(state, action) {
-      // AuthService.questlogin fonksiyonunu buraya entegre etmek gerekebilir.
     },
     logout(state) {
-      // AuthService.logout fonksiyonunu buraya entegre etmek gerekebilir.
+      state.user = null
+      state.isLoggedIn = false
+      state.token = null
+      state.refreshToken = null
+      localStorage.removeItem('user')
+      localStorage.removeItem('token')
+      localStorage.removeItem('refreshToken')
+      localStorage.removeItem('userType')
     },
     activationCode(state, action) {
-      // AuthService.activationCode fonksiyonunu buraya entegre etmek gerekebilir.
     },
     resendActivationCode(state) {
       const formData = {
         email: localStorage.getItem("activationMail"),
       };
-      // AuthService.resendActivationCode fonksiyonunu buraya entegre etmek gerekebilir.
     },
     forgotPassword(state, action) {
-      // AuthService.forgotPassword fonksiyonunu buraya entegre etmek gerekebilir.
     },
     updatePlatform(state) {
       if (state.token !== null && state.token !== undefined) {
-        // AuthService.updatePlatform fonksiyonunu buraya entegre etmek gerekebilir.
       }
     },
   },
 });
 
-export const { actions, reducer } = authSlice;
+export const { checkIsLoggedIn, getToken, renewToken, signUp, login, logout } = citiesSlice.actions;
 
-export const store = configureStore({
-  reducer: {
-    auth: reducer,
-  },
-});
+export const logoutAuth = () => (dispatch) => {
+  dispatch(logout)
+};
+
+export const renewTokenAuth = () => (dispatch) => {
+  dispatch(renewToken)
+};
+
+export default citiesSlice.reducer;
