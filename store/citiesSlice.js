@@ -12,19 +12,24 @@ export const citiesSlice = createSlice({
     setCities(state, action) {
       state.cities = action.payload;
     },
-    setLoading(state, action) {
-      state.isLoading = action.payload;
-    },
   },
 });
 
-export const { setCities, setLoading } = citiesSlice.actions;
+export const { setCities } = citiesSlice.actions;
 
 export const getAllCities = () => async (dispatch) => {
   try {
     const response = await CitiesService.getAllCities();
     if (response.status === 200) {
-      dispatch(setCities(response.data.result));
+      const cities = []
+      response.data.cities.forEach((item) => {
+        const obj = {
+          key: (item.id).toString(),
+          value: item.name
+        }
+        cities.push(obj)
+      })
+      dispatch(setCities(cities));
     }
   } catch (error) {
   } finally {
