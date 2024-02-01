@@ -1,4 +1,4 @@
-import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import AuthService from "../services/AuthService";
 
 const initialState = {
@@ -17,7 +17,7 @@ const initialState = {
   activationEmail: "",
 };
 
-const authSlice = createSlice({
+export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
