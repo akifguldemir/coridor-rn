@@ -25,10 +25,10 @@ const authSlice = createSlice({
       if (state.isLoggedIn) return true;
       else false;
     },
-    getToken(state) {
+    getTokenAuth(state) {
       return state.token;
     },
-    renewToken(state, action) {
+    renewTokenAuth(state, action) {
       state.token = null;
       if (state.refreshToken != null) {
         return AuthService.renewToken(state.refreshToken).then(
@@ -53,7 +53,7 @@ const authSlice = createSlice({
     },
     login(state, action) {
     },
-    logout(state) {
+    logoutAuth(state) {
       state.user = null
       state.isLoggedIn = false
       state.token = null
@@ -79,14 +79,18 @@ const authSlice = createSlice({
   },
 });
 
-export const { checkIsLoggedIn, getToken, renewToken, signUp, login, logout } = citiesSlice.actions;
+export const { checkIsLoggedIn, getTokenAuth, renewTokenAuth, signUp, login, logoutAuth } = authSlice.actions;
 
-export const logoutAuth = () => (dispatch) => {
+export const logout = () => (dispatch) => {
   dispatch(logout)
 };
 
-export const renewTokenAuth = () => (dispatch) => {
-  dispatch(renewToken)
+export const getToken = () => (dispatch) => {
+  return dispatch(getToken)
 };
 
-export default citiesSlice.reducer;
+export const renewToken = () => (dispatch) => {
+  return dispatch(renewToken)
+};
+
+export default authSlice.reducer;
