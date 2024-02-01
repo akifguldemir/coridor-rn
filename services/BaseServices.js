@@ -9,14 +9,14 @@ const BASE_URL = "http://192.168.1.71:8000/api";
 
 axios.defaults.baseURL = BASE_URL;
 
-axios.interceptors.request.use(
-  function (config) {
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
+// axios.interceptors.request.use(
+//   function (config) {
+//     return config;
+//   },
+//   function (error) {
+//     return Promise.reject(error);
+//   }
+// );
 
 // axios.interceptors.response.use(
 //   function (response) {

@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCities } from "../store/citiesSlice";
-import axios from "axios";
 
 const gender = [
   { key: "1", value: "Female" },
@@ -23,7 +22,6 @@ function Register() {
 
   const allCities = useSelector((state) => state.cities.cities);
   
-
   const [inputs, setInputs] = useState({
     fullName: "",
     userName: "",

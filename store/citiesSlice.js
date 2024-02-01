@@ -3,7 +3,6 @@ import CitiesService from "../services/CitiesService";
 
 const initialState = {
   cities: [],
-  isLoading: false,
 };
 
 export const citiesSlice = createSlice({
@@ -23,14 +22,12 @@ export const { setCities, setLoading } = citiesSlice.actions;
 
 export const getAllCities = () => async (dispatch) => {
   try {
-    dispatch(setLoading(true));
     const response = await CitiesService.getAllCities();
     if (response.status === 200) {
       dispatch(setCities(response.data.result));
     }
   } catch (error) {
   } finally {
-    dispatch(setLoading(false));
   }
 };
 
