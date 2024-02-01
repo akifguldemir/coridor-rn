@@ -14,34 +14,15 @@ const gender = [
 ];
 
 function Register() {
+
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getAllCities());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getAllCities());
+  }, [dispatch]);
 
   const allCities = useSelector((state) => state.cities.cities);
-
-  function test() {
-    return axios
-      .get("http://127.0.0.1:8000/api/cities", {
-        headers: {
-          "content-type": "application/json",
-        },
-      })
-      .then(function (response) {
-        console.log(response)
-        return response;
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .finally(function () {
-        // always executed
-      });
-  }
-  test();
+  
 
   const [inputs, setInputs] = useState({
     fullName: "",
@@ -65,8 +46,8 @@ function Register() {
   function setSelectedGender(val) {
     inputChangedHandler("gender", val);
   }
-  function handleSubmit() {
-    console.log(inputs);
+  function handleSubmit(){
+    console.log(inputs)
     // dispatch(signUp(data))
   }
   return (
