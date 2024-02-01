@@ -48,7 +48,7 @@ export const { checkIsLoggedInAuth, signUpAuth, loginAuth, logoutAuth } =
   authSlice.actions;
 
 export const logout = () => (dispatch) => {
-  dispatch(logout);
+  dispatch(logoutAuth);
 };
 
 export const getToken = () => (dispatch) => {
@@ -61,7 +61,7 @@ export const renewToken = () => (dispatch) => {
 
 export const signUp = (data) => (dispatch) => {
   console.log(data)
-  return dispatch(signUpAuth(data));
+  dispatch(signUpAuth(data));
 };
 
 export default authSlice.reducer;
