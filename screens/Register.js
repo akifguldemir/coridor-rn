@@ -1,10 +1,12 @@
 import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 import CustomInput from "../components/CustomInput";
-import { useState } from "react";
+import CustomButton from "../components/CustomButton";
+import { useState, useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCities } from "../store/citiesSlice";
+import axios from "axios";
 
 const gender = [
   { key: "1", value: "Female" },
@@ -12,6 +14,35 @@ const gender = [
 ];
 
 function Register() {
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(getAllCities());
+  // }, [dispatch]);
+
+  const allCities = useSelector((state) => state.cities.cities);
+
+  function test() {
+    return axios
+      .get("http://127.0.0.1:8000/api/cities", {
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+      .then(function (response) {
+        console.log(response)
+        return response;
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+  }
+  test();
+
   const [inputs, setInputs] = useState({
     fullName: "",
     userName: "",
@@ -24,7 +55,6 @@ function Register() {
   });
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
-    console.log(inputIdentifier + "----" + enteredValue);
     setInputs((curInputs) => {
       return {
         ...curInputs,
@@ -34,6 +64,10 @@ function Register() {
   }
   function setSelectedGender(val) {
     inputChangedHandler("gender", val);
+  }
+  function handleSubmit() {
+    console.log(inputs);
+    // dispatch(signUp(data))
   }
   return (
     <ScrollView>
@@ -91,21 +125,44 @@ function Register() {
           setSelected={(val) => setSelectedGender(val)}
           data={gender}
           save="value"
-          boxStyles={{borderRadius:30, borderColor: GlobalStyles.colors.inputGray, borderWidth: 2, marginVertical:8 }}
-          dropdownStyles={{borderRadius:30, borderColor: GlobalStyles.colors.inputGray, borderWidth: 2 }}
-          notFoundText={'Bulunamadı'}
+          boxStyles={{
+            borderRadius: 30,
+            borderColor: GlobalStyles.colors.inputGray,
+            borderWidth: 2,
+            marginVertical: 8,
+          }}
+          dropdownStyles={{
+            borderRadius: 30,
+            borderColor: GlobalStyles.colors.inputGray,
+            borderWidth: 2,
+          }}
+          notFoundText={"Bulunamadı"}
           search={false}
-          placeholder={'Cinsiyet'}
+          placeholder={"Cinsiyet"}
         />
         <SelectList
           setSelected={(val) => setSelectedGender(val)}
-          data={gender}
+          data={allCities}
           save="value"
-          boxStyles={{borderRadius:30, borderColor: GlobalStyles.colors.inputGray, borderWidth: 2, marginVertical:8 }}
-          dropdownStyles={{borderRadius:30, borderColor: GlobalStyles.colors.inputGray, borderWidth: 2 }}
-          notFoundText={'Bulunamadı'}
+          boxStyles={{
+            borderRadius: 30,
+            borderColor: GlobalStyles.colors.inputGray,
+            borderWidth: 2,
+            marginVertical: 8,
+          }}
+          dropdownStyles={{
+            borderRadius: 30,
+            borderColor: GlobalStyles.colors.inputGray,
+            borderWidth: 2,
+          }}
+          notFoundText={"Bulunamadı"}
           search={false}
-          placeholder={'Şehir'}
+          placeholder={"Şehir"}
+        />
+        <CustomButton
+          title="Giriş Yap"
+          style={styles.submitButton}
+          onPress={handleSubmit}
         />
       </View>
     </ScrollView>
@@ -152,5 +209,8 @@ const styles = StyleSheet.create({
     width: 250,
     marginTop: 8,
     marginBottom: 40,
+  },
+  submitButton: {
+    backgroundColor: GlobalStyles.colors.mainColor,
   },
 });

@@ -24,7 +24,7 @@ export const { setCities, setLoading } = citiesSlice.actions;
 export const getAllCities = () => async (dispatch) => {
   try {
     dispatch(setLoading(true));
-    const response = await CitiesService.getAllNews();
+    const response = await CitiesService.getAllCities();
     if (response.status === 200) {
       dispatch(setCities(response.data.result));
     }

@@ -3,7 +3,7 @@ import { BaseService } from "./BaseServices"
 
 class CitiesService extends BaseService {
 
-    getAllNews(){
+    getAllCities(){
         return this.get(GET_CITIES)
     }
 }

@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./screens/Login";
 import { GlobalStyles } from "./constants/styles";
 import Register from "./screens/Register";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 const Stack = createNativeStackNavigator();
 
@@ -12,23 +14,27 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
               headerStyle: { backgroundColor: GlobalStyles.colors.mainColor },
               headerTintColor: "white",
-            }}>
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="Register"
-            component={Register}
-            options={{ title: "Kaydol" }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+            }}
+          >
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{ title: "" }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={Register}
+              options={{ title: "Kaydol" }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
     </>
   );
 }
