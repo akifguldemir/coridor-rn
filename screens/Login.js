@@ -85,7 +85,6 @@ function Login() {
           style={styles.input}
           placeholder="Şifre"
           textInputConfig={{
-            keyboardType: "decimal-pad",
             onChangeText: inputChangedHandler.bind(this, "password"),
             value: inputs.password,
           }}
