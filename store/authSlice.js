@@ -2,19 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import AuthService from "../services/AuthService";
 
 const initialState = {
-  // userType: localStorage.getItem("userType"),
-  // user: localStorage.getItem("user"),
-  // isLoggedIn: !(
-  //   localStorage.getItem("token") === undefined ||
-  //   localStorage.getItem("token") === null
-  // ),
-  // isQuestLoggedIn: !(
-  //   localStorage.getItem("token") === undefined ||
-  //   localStorage.getItem("token") === null
-  // ),
-  // token: localStorage.getItem("token"),
-  // refreshToken: localStorage.getItem("refreshToken"),
-  activationEmail: "",
+  userType: null,
+  user: null,
+  isLoggedIn: null,
+  token: null,
+  refreshToken: null,
+  activationEmail: null,
 };
 
 export const authSlice = createSlice({
@@ -60,7 +53,12 @@ export const renewToken = () => (dispatch) => {
 };
 
 export const signUp = (data) => (dispatch) => {
-  console.log(data)
+  console.log(data);
+  dispatch(signUpAuth(data));
+};
+
+export const login = (data) => (dispatch) => {
+  console.log(data);
   dispatch(signUpAuth(data));
 };
 
