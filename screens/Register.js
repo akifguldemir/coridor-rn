@@ -92,6 +92,7 @@ function Register() {
         <CustomInput
           placeholder="gg.aa.yyyy"
           textInputConfig={{
+            keyboardType: "decimal-pad",
             onChangeText: inputChangedHandler.bind(this, "birthdate"),
             value: inputs.birthdate,
           }}
@@ -99,6 +100,7 @@ function Register() {
         <CustomInput
           placeholder="Telefon"
           textInputConfig={{
+            keyboardType: "decimal-pad",
             onChangeText: inputChangedHandler.bind(this, "phone"),
             value: inputs.phone,
           }}

@@ -77,7 +77,6 @@ function Login() {
           style={styles.input}
           placeholder="E-Posta"
           textInputConfig={{
-            keyboardType: "decimal-pad",
             onChangeText: inputChangedHandler.bind(this, "email"),
             value: inputs.email,
           }}
