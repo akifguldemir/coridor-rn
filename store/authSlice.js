@@ -2,18 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 import AuthService from "../services/AuthService";
 
 const initialState = {
-  userType: localStorage.getItem("userType"),
-  user: localStorage.getItem("user"),
-  isLoggedIn: !(
-    localStorage.getItem("token") === undefined ||
-    localStorage.getItem("token") === null
-  ),
-  isQuestLoggedIn: !(
-    localStorage.getItem("token") === undefined ||
-    localStorage.getItem("token") === null
-  ),
-  token: localStorage.getItem("token"),
-  refreshToken: localStorage.getItem("refreshToken"),
+  // userType: localStorage.getItem("userType"),
+  // user: localStorage.getItem("user"),
+  // isLoggedIn: !(
+  //   localStorage.getItem("token") === undefined ||
+  //   localStorage.getItem("token") === null
+  // ),
+  // isQuestLoggedIn: !(
+  //   localStorage.getItem("token") === undefined ||
+  //   localStorage.getItem("token") === null
+  // ),
+  // token: localStorage.getItem("token"),
+  // refreshToken: localStorage.getItem("refreshToken"),
   activationEmail: "",
 };
 
@@ -26,7 +26,7 @@ export const authSlice = createSlice({
       else false;
     },
     signUpAuth(state, action) {
-      localStorage.setItem("activationMail", action.payload.email);
+      // localStorage.setItem("activationMail", action.payload.email);
       state.activationEmail = action.payload.email;
       return AuthService.signUp(action.payload);
     },
@@ -36,10 +36,10 @@ export const authSlice = createSlice({
       state.isLoggedIn = false;
       state.token = null;
       state.refreshToken = null;
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("userType");
+      // localStorage.removeItem("user");
+      // localStorage.removeItem("token");
+      // localStorage.removeItem("refreshToken");
+      // localStorage.removeItem("userType");
     },
   },
 });
