@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCities } from "../store/citiesSlice";
+import { all } from "axios";
 
 const gender = [
   { key: "1", value: "Female" },
@@ -22,30 +23,14 @@ function Register() {
   const allCities = useSelector((state) => state.cities.cities);
 
   const [inputsRegister, setInputsRegister] = useState({
-    fullName: {
-      value: "",
-    },
-    userName: {
-      value: "",
-    },
-    email: {
-      value: "",
-    },
-    password: {
-      value: "",
-    },
-    birthdate: {
-      value: "",
-    },
-    phone: {
-      value: "",
-    },
-    gender: {
-      value: "",
-    },
-    cities: {
-      value: "",
-    },
+    fullName: "",
+    userName: "",
+    email: "",
+    password: "",
+    birthdate: "",
+    phone: "",
+    gender: "",
+    cities: "",
   });
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
@@ -80,28 +65,28 @@ function Register() {
           placeholder="Ad - Soyad"
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "fullName"),
-            value: inputsRegister.fullName.value,
+            value: inputsRegister.fullName,
           }}
         />
         <CustomInput
           placeholder="Kullanıcı Adı"
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "userName"),
-            value: inputsRegister.userName.value,
+            value: inputsRegister.userName,
           }}
         />
         <CustomInput
           placeholder="E-Posta"
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "email"),
-            value: inputsRegister.email.value,
+            value: inputsRegister.email,
           }}
         />
         <CustomInput
           placeholder="Şifre"
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "password"),
-            value: inputsRegister.password.value,
+            value: inputsRegister.password,
           }}
         />
         <CustomInput
@@ -109,7 +94,7 @@ function Register() {
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: inputChangedHandler.bind(this, "birthdate"),
-            value: inputsRegister.birthdate.value,
+            value: inputsRegister.birthdate,
           }}
         />
         <CustomInput
@@ -117,7 +102,7 @@ function Register() {
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: inputChangedHandler.bind(this, "phone"),
-            value: inputsRegister.phone.value,
+            value: inputsRegister.phone,
           }}
         />
         <SelectList
