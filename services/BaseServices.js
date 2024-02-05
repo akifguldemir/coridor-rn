@@ -1,8 +1,7 @@
 /* eslint-disable */
 import axios from "axios";
-// import { useToast } from 'vue-toastification'
+import Toast from "react-native-toast-message";
 
-// const toast = useToast()
 const lastErrorMessage = "";
 
 const BASE_URL = "http://192.168.1.71:8000/api";
@@ -64,7 +63,12 @@ export class BaseService {
       response.message ||
       response.toString();
     if (resultMessage === "[object Object]") return;
-    toast.success(resultMessage);
+    console.log(resultMessage)
+    Toast.show({
+      type: "success",
+      text1: "Hello",
+      text2: "başarılı",
+    });
   }
   handleError(error) {
     console.log(error);
@@ -88,7 +92,10 @@ export class BaseService {
       errorMessage !== "Internal Server Error" &&
       errorMessage !== "Undefined error!"
     ) {
-      toast.error(errorMessage);
+      Toast.show({
+        type: "error",
+        text1: errorMessage,
+      });
       // lastErrorMessage = errorMessage
     } else {
       console.log("Service error:", errorMessage);
@@ -116,7 +123,7 @@ export class BaseService {
         // always executed
       });
   }
-  post(path, formData) {
+  post(path, formData, options = {handleSuccess: true, handleError: true}) {
     return axios
       .post(this.getFullPath(path), formData, {
         headers: {
@@ -125,11 +132,11 @@ export class BaseService {
       })
       .then(
         (response) => {
-          this.handleSuccess(response);
+          if(undefined!== options.handleSuccess && options.handleSuccess) this.handleSuccess(response)
           return response;
         },
         (error) => {
-          this.handleError(response);
+          if(undefined!== options.handleError && options.handleError) this.handleError(error)
           return error;
         }
       )
