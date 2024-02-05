@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   input: {
-    color: GlobalStyles.colors.mainColor,
+    color: 'black',
     borderRadius: 30,
     fontSize: 18,
     borderColor: GlobalStyles.colors.inputGray,

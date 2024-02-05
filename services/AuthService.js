@@ -1,12 +1,16 @@
 import { BaseService } from "./BaseServices";
-import { NonAuthBaseService } from "./NonAuthBaseService";
 
 const SIGNUP = '/v1/user/register'
 
 
-class AuthService extends NonAuthBaseService {
+class AuthService extends BaseService {
   signUp(formData) {
     return this.post(SIGNUP, formData);
+  }
+  login (formData) {
+    return this.post(LOGIN_PATH, formData).then(response => {
+      return response
+    })
   }
 }
 

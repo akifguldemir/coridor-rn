@@ -13,7 +13,6 @@ const gender = [
 ];
 
 function Register() {
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,20 +20,36 @@ function Register() {
   }, [dispatch]);
 
   const allCities = useSelector((state) => state.cities.cities);
-  
-  const [inputs, setInputs] = useState({
-    fullName: "",
-    userName: "",
-    email: "",
-    password: "",
-    birthdate: "",
-    phone: "",
-    gender: "",
-    cities: "",
+
+  const [inputsRegister, setInputsRegister] = useState({
+    fullName: {
+      value: "",
+    },
+    userName: {
+      value: "",
+    },
+    email: {
+      value: "",
+    },
+    password: {
+      value: "",
+    },
+    birthdate: {
+      value: "",
+    },
+    phone: {
+      value: "",
+    },
+    gender: {
+      value: "",
+    },
+    cities: {
+      value: "",
+    },
   });
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
-    setInputs((curInputs) => {
+    setInputsRegister((curInputs) => {
       return {
         ...curInputs,
         [inputIdentifier]: { value: enteredValue },
@@ -47,10 +62,10 @@ function Register() {
   function setSelectedCity(val) {
     inputChangedHandler("cities", val);
   }
-  function handleSubmit(){
-    dispatch(signUp(inputs))
+  function handleSubmit() {
+    dispatch(signUp(inputsRegister));
   }
-  
+
   return (
     <ScrollView>
       <View style={styles.logoContainer}>
@@ -65,28 +80,28 @@ function Register() {
           placeholder="Ad - Soyad"
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "fullName"),
-            value: inputs.fullName,
+            value: inputsRegister.fullName.value,
           }}
         />
         <CustomInput
           placeholder="Kullanıcı Adı"
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "userName"),
-            value: inputs.userName,
+            value: inputsRegister.userName.value,
           }}
         />
         <CustomInput
           placeholder="E-Posta"
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "email"),
-            value: inputs.email,
+            value: inputsRegister.email.value,
           }}
         />
         <CustomInput
           placeholder="Şifre"
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "password"),
-            value: inputs.password,
+            value: inputsRegister.password.value,
           }}
         />
         <CustomInput
@@ -94,7 +109,7 @@ function Register() {
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: inputChangedHandler.bind(this, "birthdate"),
-            value: inputs.birthdate,
+            value: inputsRegister.birthdate.value,
           }}
         />
         <CustomInput
@@ -102,7 +117,7 @@ function Register() {
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: inputChangedHandler.bind(this, "phone"),
-            value: inputs.phone,
+            value: inputsRegister.phone.value,
           }}
         />
         <SelectList

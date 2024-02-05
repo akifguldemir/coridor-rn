@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import AuthService from "../services/AuthService";
+import LocalStorage from "../utils/LocalStorage";
 
 const initialState = {
   userType: null,
@@ -19,11 +20,13 @@ export const authSlice = createSlice({
       else false;
     },
     signUpAuth(state, action) {
-      // localStorage.setItem("activationMail", action.payload.email);
+      // LocalStorage.setItem("activationMail", action.payload.email);
       state.activationEmail = action.payload.email;
-      return AuthService.signUp(action.payload);
+      // return AuthService.signUp(action.payload);
     },
-    loginAuth(state, action) {},
+    loginAuth(state, action) {
+      console.log(action.payload)
+    },
     logoutAuth(state) {
       state.user = null;
       state.isLoggedIn = false;
@@ -53,13 +56,12 @@ export const renewToken = () => (dispatch) => {
 };
 
 export const signUp = (data) => (dispatch) => {
-  console.log(data);
-  dispatch(signUpAuth(data));
 };
 
 export const login = (data) => (dispatch) => {
-  console.log(data);
-  dispatch(signUpAuth(data));
+  console.log(data)
+  console.log(123)
+  dispatch(loginAuth(data));
 };
 
 export default authSlice.reducer;

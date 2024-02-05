@@ -58,7 +58,7 @@ axios.defaults.baseURL = BASE_URL;
 // });
 
 export class BaseService {
-  getFullPath(path) { 
+  getFullPath(path) {
     return BASE_URL + path;
   }
   get(path) {
@@ -77,6 +77,25 @@ export class BaseService {
       })
       .finally(function () {
         // always executed
+      });
+  }
+  post(path, formData) {
+    return axios
+      .post(this.getFullUrl(path), formData, {
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+      .then(
+        (response) => {
+          return response;
+        },
+        (error) => {
+          return error;
+        }
+      )
+      .catch((error) => {
+        return error;
       });
   }
 }

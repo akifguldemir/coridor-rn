@@ -15,20 +15,34 @@ import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import CustomInput from "../components/CustomInput";
+import { UseDispatch, useDispatch } from "react-redux";
+import { login } from "../store/authSlice";
 
 function Login() {
+  dispatch = useDispatch();
   const navigation = useNavigation();
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [inputs, setInputs] = useState({
-    fullName: "",
-    userName: "",
-    email: "",
-    password: "",
-    birthdate: "",
+  const [inputsLogin, setInputsLogin] = useState({
+    fullName: {
+      value: "",
+    },
+    userName: {
+      value: "",
+    },
+    email: {
+      value: "",
+    },
+    password: {
+      value: "",
+    },
+    birthdate: {
+      value: "",
+    },
   });
 
   function handleSubmit() {
+    dispatch(login(inputsLogin));
     return;
   }
 
@@ -37,15 +51,7 @@ function Login() {
   }
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
-    setInputs((curInputs) => {
-      return {
-        ...curInputs,
-        [inputIdentifier]: { value: enteredValue },
-      };
-    });
-  }
-  function inputChangedHandler(inputIdentifier, enteredValue) {
-    setInputs((curInputs) => {
+    setInputsLogin((curInputs) => {
       return {
         ...curInputs,
         [inputIdentifier]: { value: enteredValue },
@@ -78,7 +84,7 @@ function Login() {
           placeholder="E-Posta"
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "email"),
-            value: inputs.email,
+            value: inputsLogin.email.value,
           }}
         />
         <CustomInput
@@ -86,7 +92,7 @@ function Login() {
           placeholder="Şifre"
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "password"),
-            value: inputs.password,
+            value: inputsLogin.password.value,
           }}
         />
       </View>
@@ -102,9 +108,7 @@ function Login() {
           <Text style={styles.registerButton}>Kaydol</Text>
         </Text>
       </Pressable>
-      <Pressable
-        onPress={() => setModalVisible(true)}
-      >
+      <Pressable onPress={() => setModalVisible(true)}>
         <Text style={styles.whatIsCoridorText}>Coridor nedir ?</Text>
       </Pressable>
       <Modal
@@ -168,7 +172,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 100,
     resizeMode: "contain",
-    marginBottom: 16
+    marginBottom: 16,
   },
   loginText: {
     fontSize: 20,
@@ -250,11 +254,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  whatIsCoridorText:{
-    color: '#96999d',
+  whatIsCoridorText: {
+    color: "#96999d",
     fontWeight: "bold",
     textAlign: "center",
-    marginTop: 16
+    marginTop: 16,
   },
   modalText: {
     marginBottom: 15,
