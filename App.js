@@ -8,6 +8,7 @@ import Register from "./screens/Register";
 import { Provider, useSelector } from "react-redux";
 import { store } from "./store/store";
 import FirstMission from "./screens/FirstMission";
+import Toast from 'react-native-toast-message';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,7 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
+      <Toast />
     </>
   );
 }
