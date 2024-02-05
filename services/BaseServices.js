@@ -81,7 +81,7 @@ export class BaseService {
   }
   post(path, formData) {
     return axios
-      .post(this.getFullUrl(path), formData, {
+      .post(this.getFullPath(path), formData, {
         headers: {
           "content-type": "application/json",
         },
