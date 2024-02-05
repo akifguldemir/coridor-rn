@@ -3,47 +3,33 @@ import {
   View,
   Text,
   Image,
-  TextInput,
   Modal,
   Pressable,
   TouchableOpacity,
   Linking,
 } from "react-native";
 import { GlobalStyles } from "../constants/styles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import CustomInput from "../components/CustomInput";
-import { UseDispatch, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { login } from "../store/authSlice";
 
 function Login() {
   dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.auth.isLoading);
   const navigation = useNavigation();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [inputsLogin, setInputsLogin] = useState({
-    fullName: {
-      value: "",
-    },
-    userName: {
-      value: "",
-    },
-    email: {
-      value: "",
-    },
-    password: {
-      value: "",
-    },
-    birthdate: {
-      value: "",
-    },
+    email: "",
+    password: "",
   });
 
   function handleSubmit() {
     dispatch(login(inputsLogin));
-    return;
   }
 
   function goToRegister() {
@@ -54,10 +40,19 @@ function Login() {
     setInputsLogin((curInputs) => {
       return {
         ...curInputs,
-        [inputIdentifier]: { value: enteredValue },
+        [inputIdentifier]: enteredValue,
       };
     });
   }
+
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const refreshToken = useSelector((state) => state.auth.refreshToken);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigation.navigate('FirstMission');
+    }
+  }, [isLoggedIn, navigation]);
 
   const goToCoridorSite = (url) => {
     Linking.openURL(url)
@@ -71,82 +66,83 @@ function Login() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.logoGroup}>
-        <Image
-          style={styles.logo}
-          source={require("../assets/coridor.webp")}
-        ></Image>
-        <Text style={styles.loginText}>Giriş Yap</Text>
-      </View>
-      <View style={styles.inputGroup}>
-        <CustomInput
-          style={styles.input}
-          placeholder="E-Posta"
-          textInputConfig={{
-            onChangeText: inputChangedHandler.bind(this, "email"),
-            value: inputsLogin.email.value,
-          }}
-        />
-        <CustomInput
-          style={styles.input}
-          placeholder="Şifre"
-          textInputConfig={{
-            onChangeText: inputChangedHandler.bind(this, "password"),
-            value: inputsLogin.password.value,
-          }}
-        />
-      </View>
-      <Text style={styles.forgotPasswordText}>Şifremi Unuttum</Text>
-      <CustomButton
-        title="Giriş Yap"
-        style={styles.loginButton}
-        onPress={handleSubmit}
-      />
-      <Pressable onPress={goToRegister}>
-        <Text style={styles.warningText}>
-          Hala kayıtlı değil misin?{" "}
-          <Text style={styles.registerButton}>Kaydol</Text>
-        </Text>
-      </Pressable>
-      <Pressable onPress={() => setModalVisible(true)}>
-        <Text style={styles.whatIsCoridorText}>Coridor nedir ?</Text>
-      </Pressable>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View style={styles.modalHeader}>
-              <View style={styles.modalHeaderContent}></View>
-              <TouchableOpacity onPress={() => setModalVisible(false)}>
-                <AntDesign name="close" size={24} color="black" />
-              </TouchableOpacity>
-            </View>
-            <Image
-              style={styles.modalLogo}
-              source={require("../assets/coridor1.png")}
-            ></Image>
-            <Text style={styles.modalText}>
-              Coridor, kendiniz ve toplum için etki yaratabileceğini projelere,
-              etkinliklere ulaşabilmenizi sağlayan dijital geçittir.Görev
-              noktalarından katılım sağladıkça kazandığınız puanları, köy
-              okulları için kitap bağışına dönüştürür ve farklı deneyim ödülleri
-              kazanmanızı sağlar.
-            </Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => goToCoridorSite("https://www.info.coridor.co/")}
-            >
-              <Text style={styles.textStyle}>Yolculuğumuzun Detayları</Text>
-            </Pressable>
-          </View>
+        <View style={styles.logoGroup}>
+          <Image
+            style={styles.logo}
+            source={require("../assets/coridor.webp")}
+          ></Image>
+          <Text style={styles.loginText}>Giriş Yap</Text>
         </View>
-      </Modal>
+        <View style={styles.inputGroup}>
+          <CustomInput
+            style={styles.input}
+            placeholder="E-Posta"
+            textInputConfig={{
+              onChangeText: inputChangedHandler.bind(this, "email"),
+              value: inputsLogin.email,
+            }}
+          />
+          <CustomInput
+            style={styles.input}
+            placeholder="Şifre"
+            textInputConfig={{
+              onChangeText: inputChangedHandler.bind(this, "password"),
+              value: inputsLogin.password,
+            }}
+          />
+        </View>
+        <Text style={styles.forgotPasswordText}>Şifremi Unuttum</Text>
+        <CustomButton
+          title="Giriş Yap"
+          style={styles.loginButton}
+          onPress={handleSubmit}
+          loading={isLoading}
+        />
+        <Pressable onPress={goToRegister}>
+          <Text style={styles.warningText}>
+            Hala kayıtlı değil misin?{" "}
+            <Text style={styles.registerButton}>Kaydol</Text>
+          </Text>
+        </Pressable>
+        <Pressable onPress={() => setModalVisible(true)}>
+          <Text style={styles.whatIsCoridorText}>Coridor nedir ?</Text>
+        </Pressable>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <View style={styles.modalHeader}>
+                <View style={styles.modalHeaderContent}></View>
+                <TouchableOpacity onPress={() => setModalVisible(false)}>
+                  <AntDesign name="close" size={24} color="black" />
+                </TouchableOpacity>
+              </View>
+              <Image
+                style={styles.modalLogo}
+                source={require("../assets/coridor1.png")}
+              ></Image>
+              <Text style={styles.modalText}>
+                Coridor, kendiniz ve toplum için etki yaratabileceğini
+                projelere, etkinliklere ulaşabilmenizi sağlayan dijital
+                geçittir.Görev noktalarından katılım sağladıkça kazandığınız
+                puanları, köy okulları için kitap bağışına dönüştürür ve farklı
+                deneyim ödülleri kazanmanızı sağlar.
+              </Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => goToCoridorSite("https://www.info.coridor.co/")}
+              >
+                <Text style={styles.textStyle}>Yolculuğumuzun Detayları</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
     </View>
   );
 }

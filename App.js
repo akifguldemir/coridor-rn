@@ -5,12 +5,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./screens/Login";
 import { GlobalStyles } from "./constants/styles";
 import Register from "./screens/Register";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { store } from "./store/store";
+import FirstMission from "./screens/FirstMission";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
   return (
     <>
       <StatusBar style="light" />
@@ -31,6 +33,11 @@ export default function App() {
               name="Register"
               component={Register}
               options={{ title: "Kaydol" }}
+            />
+            <Stack.Screen
+              name="FirstMission"
+              component={FirstMission}
+              options={{ title: "İlk Görev", headerLeft: () => null }}
             />
           </Stack.Navigator>
         </NavigationContainer>
