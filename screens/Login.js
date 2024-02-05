@@ -82,6 +82,7 @@ function Login() {
         <CustomInput
           style={styles.input}
           placeholder="Şifre"
+          secureTextEntry={true}
           textInputConfig={{
             onChangeText: formik.handleChange("password"),
             value: formik.values.password,

@@ -1,7 +1,7 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 
-function CustomInput({ style, textInputConfig, placeholder, editable }) {
+function CustomInput({ style, textInputConfig, placeholder, editable, secureTextEntry }) {
 
   let inputStyles = [styles.input];
 
@@ -11,7 +11,7 @@ function CustomInput({ style, textInputConfig, placeholder, editable }) {
 
   return (
     <View style={[styles.inputContainer, style]}>
-      <TextInput editable={editable}  placeholder={placeholder} style={inputStyles} {...textInputConfig} />
+      <TextInput secureTextEntry={secureTextEntry} editable={editable}  placeholder={placeholder} style={inputStyles} {...textInputConfig} />
     </View>
   );
 }
