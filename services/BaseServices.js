@@ -58,6 +58,43 @@ axios.defaults.baseURL = BASE_URL;
 // });
 
 export class BaseService {
+  handleSuccess(response) {
+    const resultMessage =
+      (response && response.data && response.data.message) ||
+      response.message ||
+      response.toString();
+    if (resultMessage === "[object Object]") return;
+    toast.success(resultMessage);
+  }
+  handleError(error) {
+    console.log(error);
+    let errorMessage = "Undefined error!";
+    if (undefined !== error.response) {
+      errorMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+    }
+
+    if (errorMessage === "Missing JWT Refresh Token")
+      errorMessage = "Lütfen kullanıcı bilgilerinizi kontrol ediniz.";
+    if (errorMessage === "Invalid credentials.")
+      errorMessage = "Kullanıcı bilgileriniz hatalı.";
+
+    if (
+      errorMessage !== lastErrorMessage &&
+      errorMessage !== "Internal Server Error" &&
+      errorMessage !== "Undefined error!"
+    ) {
+      toast.error(errorMessage);
+      // lastErrorMessage = errorMessage
+    } else {
+      console.log("Service error:", errorMessage);
+    }
+    return error;
+  }
   getFullPath(path) {
     return BASE_URL + path;
   }
@@ -88,13 +125,16 @@ export class BaseService {
       })
       .then(
         (response) => {
+          this.handleSuccess(response);
           return response;
         },
         (error) => {
+          this.handleError(response);
           return error;
         }
       )
       .catch((error) => {
+        this.handleError(error);
         return error;
       });
   }
