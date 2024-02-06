@@ -26,14 +26,6 @@ function Login() {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigation.navigate("FirstMission");
-    }
-  }, [isLoggedIn, navigation]);
-
   const formik = useFormik({
     initialValues: {
       email: "",
