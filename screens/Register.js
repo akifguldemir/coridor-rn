@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCities } from "../store/citiesSlice";
-import { all } from "axios";
 
 const gender = [
   { key: "1", value: "Female" },

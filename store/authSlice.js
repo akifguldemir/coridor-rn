@@ -36,7 +36,7 @@ export const authSlice = createSlice({
       state.refreshToken = action.payload.refreshToken
       state.email = action.payload.email
     },
-    logoutAuth(state) {
+    logoutSuccess(state) {
       state.user = null;
       state.isLoggedIn = false;
       state.token = null;
@@ -55,12 +55,12 @@ export const {
   signUpAuth,
   loginSuccess,
   setLogin,
-  logoutAuth,
+  logoutSuccess,
   setLoading,
 } = authSlice.actions;
 
 export const clearToken = () =>  (dispatch) => {
-  dispatch(logoutAuth());
+  dispatch(logoutSuccess());
 };
 
 export const getToken = () => (dispatch) => {};
