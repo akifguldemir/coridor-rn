@@ -9,18 +9,21 @@ import { Provider, useSelector, useDispatch } from "react-redux";
 import { store } from "./store/store";
 import FirstMission from "./screens/FirstMission";
 import Toast from "react-native-toast-message";
-import LocalStorage from "./utils/LocalStorage";
 import { useEffect } from "react";
 import { login } from "./store/authSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   const dispatch = useDispatch();
+  const token = useSelector(state => state.auth.token);
+  console.log('stateToken', token)
   useEffect(() => {
     const checkToken = async () => {
       try {
-        const storedToken = await LocalStorage.getItem("token");
+        const storedToken = await AsyncStorage.getItem("token");
+        console.log("storedToken", storedToken);
         if (storedToken) {
           dispatch(login(storedToken, false));
         }
@@ -30,10 +33,10 @@ export default function App() {
     };
 
     checkToken();
-  }, [dispatch]);
+  }, []);
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  console.log('isLoggedIn', isLoggedIn)
+  console.log("isLoggedIn", isLoggedIn);
   return (
     <>
       <StatusBar style="light" />
@@ -45,17 +48,20 @@ export default function App() {
               headerTintColor: "white",
             }}
           >
-            {isLoggedIn && <Stack.Screen
-              name="FirstMission"
-              component={FirstMission}
-              options={{ title: "İlk Görev", headerLeft: () => null }}
-            />}
-            {!isLoggedIn && <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ title: "" }}
-            />}
-            
+            {isLoggedIn ? (
+              <Stack.Screen
+                name="FirstMission"
+                component={FirstMission}
+                options={{ title: "İlk Görev", headerLeft: () => null }}
+              />
+            ) : (
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ title: "", headerLeft: () => null }}
+              />
+            )}
+
             <Stack.Screen
               name="Register"
               component={Register}

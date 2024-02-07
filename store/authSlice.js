@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import AuthService from "../services/AuthService";
-import LocalStorage from "../utils/LocalStorage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const initialState = {
   userType: null,
@@ -29,9 +29,6 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.refreshToken = action.payload.refreshToken;
       state.email = action.payload.email;
-      LocalStorage.setItem("token", action.payload.token);
-      LocalStorage.setItem("refreshToken", action.payload.refreshToken);
-      LocalStorage.setItem("email", action.payload.email);
     },
     setLogin(state, action) {
       state.isLoggedIn = true
@@ -44,6 +41,7 @@ export const authSlice = createSlice({
       state.isLoggedIn = false;
       state.token = null;
       state.refreshToken = null;
+      console.log('Çıkış Başarılı')
     },
     setLoading(state, action) {
       state.isLoading = action.payload;
@@ -61,11 +59,8 @@ export const {
   setLoading,
 } = authSlice.actions;
 
-export const logout = () => async (dispatch) => {
-  await LocalStorage.removeItem("user");
-  await LocalStorage.removeItem("token");
-  await LocalStorage.removeItem("refreshToken");
-  dispatch(logoutAuth);
+export const clearToken = () =>  (dispatch) => {
+  dispatch(logoutAuth());
 };
 
 export const getToken = () => (dispatch) => {};
@@ -82,16 +77,19 @@ export const login =
         dispatch(setLoading(true));
 
         const response = await AuthService.login(data);
-        console.log(response)
         if (response.status === 200) {
+          console.log('Giriş başarılı')
           response.data.email = data.email;
+          await AsyncStorage.setItem("token", response.data.token);
+          await AsyncStorage.setItem("refreshToken", response.data.refreshToken);
+          await AsyncStorage.setItem("email", response.data.email);
           dispatch(loginSuccess(response.data));
         }
       } else {
         const data = {
-          token: await LocalStorage.getItem("token"),
-          refreshToken: await LocalStorage.getItem("refreshToken"),
-          email: await LocalStorage.getItem("email"),
+          token: await AsyncStorage.getItem("token"),
+          refreshToken: await AsyncStorage.getItem("refreshToken"),
+          email: await AsyncStorage.getItem("email"),
         };
 
         dispatch(setLogin(data))
