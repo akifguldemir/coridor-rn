@@ -66,8 +66,7 @@ export class BaseService {
     console.log(resultMessage)
     Toast.show({
       type: "success",
-      text1: "Hello",
-      text2: "başarılı",
+      text2: resultMessage,
     });
   }
   handleError(error) {

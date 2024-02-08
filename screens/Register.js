@@ -60,7 +60,7 @@ function Register() {
             value: formik.values.fullName,
           }}
         />
-        {formik.touched.fullName && (
+        {formik.touched.fullName && formik.errors.fullName && (
           <Text style={styles.errorText}>{formik.errors.fullName}</Text>
         )}
         <CustomInput
@@ -70,7 +70,7 @@ function Register() {
             value: formik.values.username,
           }}
         />
-        {formik.touched.username && (
+        {formik.touched.username && formik.errors.username && (
           <Text style={styles.errorText}>{formik.errors.username}</Text>
         )}
         <CustomInput
@@ -80,7 +80,7 @@ function Register() {
             value: formik.values.email,
           }}
         />
-        {formik.touched.email && (
+        {formik.touched.email && formik.errors.email && (
           <Text style={styles.errorText}>{formik.errors.email}</Text>
         )}
         <CustomInput
@@ -90,7 +90,7 @@ function Register() {
             value: formik.values.password,
           }}
         />
-        {formik.touched.password && (
+        {formik.touched.password && formik.errors.pawssword &&  (
           <Text style={styles.errorText}>{formik.errors.password}</Text>
         )}
         <CustomInput
@@ -101,7 +101,7 @@ function Register() {
             value: formik.values.birthday,
           }}
         />
-        {formik.touched.birthday && (
+        {formik.touched.birthday && formik.errors.birthday && (
           <Text style={styles.errorText}>{formik.errors.birthday}</Text>
         )}
         <CustomInput
@@ -112,7 +112,7 @@ function Register() {
             value: formik.values.phone,
           }}
         />
-        {formik.touched.phone && (
+        {formik.touched.phone && formik.errors.phone && (
           <Text style={styles.errorText}>{formik.errors.phone}</Text>
         )}
         <SelectList
@@ -134,7 +134,7 @@ function Register() {
           search={false}
           placeholder={"Cinsiyet"}
         />
-         {formik.touched.gender && (
+         {formik.touched.gender && formik.errors.gender && (
           <Text style={styles.errorText}>{formik.errors.gender}</Text>
         )}
         <SelectList
@@ -156,7 +156,7 @@ function Register() {
           search={false}
           placeholder={"Şehir"}
         />
-        {formik.touched.city && (
+        {formik.touched.city && formik.errors.city && (
           <Text style={styles.errorText}>{formik.errors.city}</Text>
         )}
         <CustomButton
