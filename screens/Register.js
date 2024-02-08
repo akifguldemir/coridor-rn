@@ -9,6 +9,7 @@ import { getAllCities } from "../store/citiesSlice";
 import { useFormik } from "formik";
 import { signUp } from "../store/authSlice";
 import registerValidationSchema from "../utils/RegisterValidationSchema";
+import { useNavigation } from "@react-navigation/native";
 
 const gender = [
   { key: "1", value: "Female" },
@@ -17,6 +18,7 @@ const gender = [
 
 function Register() {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const isLoading = useSelector((state) => state.auth.isLoading);
 
   useEffect(() => {
@@ -37,9 +39,11 @@ function Register() {
       password: ""
     },
     validationSchema: registerValidationSchema,
-    onSubmit: (values) => {
-      console.log('ok')
-      dispatch(signUp(values))
+    onSubmit: async (values) => {
+      const result = await dispatch(signUp(values))
+      if (result.success) {
+        navigation.navigate('Login')
+      }
     },
   });
 

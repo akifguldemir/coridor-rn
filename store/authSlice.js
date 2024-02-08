@@ -71,10 +71,10 @@ export const signUp = (data) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
     const response = await AuthService.signUp(data);
-    console.log(response);
     if (response.status === 200) {
-      console.log("Kayıt başarılı");
-      // return true
+      return { success: true };
+    } else {
+      return { success: false };
     }
   } catch (error) {
     // Hata durumlarına göre işlemler
