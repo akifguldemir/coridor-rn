@@ -2,10 +2,13 @@ import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCities } from "../store/citiesSlice";
+import { useFormik } from "formik";
+import { signUp } from "../store/authSlice";
+import registerValidationSchema from "../utils/RegisterValidationSchema";
 
 const gender = [
   { key: "1", value: "Female" },
@@ -14,6 +17,7 @@ const gender = [
 
 function Register() {
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.auth.isLoading);
 
   useEffect(() => {
     dispatch(getAllCities());
@@ -21,34 +25,23 @@ function Register() {
 
   const allCities = useSelector((state) => state.cities.cities);
 
-  const [inputsRegister, setInputsRegister] = useState({
-    fullName: "",
-    userName: "",
-    email: "",
-    password: "",
-    birthdate: "",
-    phone: "",
-    gender: "",
-    cities: "",
+  const formik = useFormik({
+    initialValues: {
+      fullName: "",
+      username: "",
+      email: "",
+      birthday: "",
+      phone: "",
+      gender: "",
+      city: "",
+      password: ""
+    },
+    validationSchema: registerValidationSchema,
+    onSubmit: (values) => {
+      console.log('ok')
+      dispatch(signUp(values))
+    },
   });
-
-  function inputChangedHandler(inputIdentifier, enteredValue) {
-    setInputsRegister((curInputs) => {
-      return {
-        ...curInputs,
-        [inputIdentifier]: { value: enteredValue },
-      };
-    });
-  }
-  function setSelectedGender(val) {
-    inputChangedHandler("gender", val);
-  }
-  function setSelectedCity(val) {
-    inputChangedHandler("cities", val);
-  }
-  function handleSubmit() {
-    dispatch(signUp(inputsRegister));
-  }
 
   return (
     <ScrollView>
@@ -63,49 +56,67 @@ function Register() {
         <CustomInput
           placeholder="Ad - Soyad"
           textInputConfig={{
-            onChangeText: inputChangedHandler.bind(this, "fullName"),
-            value: inputsRegister.fullName,
+            onChangeText: formik.handleChange("fullName"),
+            value: formik.values.fullName,
           }}
         />
+        {formik.touched.fullName && (
+          <Text style={styles.errorText}>{formik.errors.fullName}</Text>
+        )}
         <CustomInput
           placeholder="Kullanıcı Adı"
           textInputConfig={{
-            onChangeText: inputChangedHandler.bind(this, "userName"),
-            value: inputsRegister.userName,
+            onChangeText: formik.handleChange("username"),
+            value: formik.values.username,
           }}
         />
+        {formik.touched.username && (
+          <Text style={styles.errorText}>{formik.errors.username}</Text>
+        )}
         <CustomInput
           placeholder="E-Posta"
           textInputConfig={{
-            onChangeText: inputChangedHandler.bind(this, "email"),
-            value: inputsRegister.email,
+            onChangeText: formik.handleChange("email"),
+            value: formik.values.email,
           }}
         />
+        {formik.touched.email && (
+          <Text style={styles.errorText}>{formik.errors.email}</Text>
+        )}
         <CustomInput
           placeholder="Şifre"
           textInputConfig={{
-            onChangeText: inputChangedHandler.bind(this, "password"),
-            value: inputsRegister.password,
+            onChangeText: formik.handleChange("password"),
+            value: formik.values.password,
           }}
         />
+        {formik.touched.password && (
+          <Text style={styles.errorText}>{formik.errors.password}</Text>
+        )}
         <CustomInput
           placeholder="gg.aa.yyyy"
           textInputConfig={{
             keyboardType: "decimal-pad",
-            onChangeText: inputChangedHandler.bind(this, "birthdate"),
-            value: inputsRegister.birthdate,
+            onChangeText: formik.handleChange("birthday"),
+            value: formik.values.birthday,
           }}
         />
+        {formik.touched.birthday && (
+          <Text style={styles.errorText}>{formik.errors.birthday}</Text>
+        )}
         <CustomInput
           placeholder="Telefon"
           textInputConfig={{
             keyboardType: "decimal-pad",
-            onChangeText: inputChangedHandler.bind(this, "phone"),
-            value: inputsRegister.phone,
+            onChangeText: formik.handleChange("phone"),
+            value: formik.values.phone,
           }}
         />
+        {formik.touched.phone && (
+          <Text style={styles.errorText}>{formik.errors.phone}</Text>
+        )}
         <SelectList
-          setSelected={(val) => setSelectedGender(val)}
+          setSelected={formik.handleChange("gender")}
           data={gender}
           save="value"
           boxStyles={{
@@ -123,8 +134,11 @@ function Register() {
           search={false}
           placeholder={"Cinsiyet"}
         />
+         {formik.touched.gender && (
+          <Text style={styles.errorText}>{formik.errors.gender}</Text>
+        )}
         <SelectList
-          setSelected={(val) => setSelectedCity(val)}
+          setSelected={formik.handleChange("city")}
           data={allCities}
           save="value"
           boxStyles={{
@@ -142,10 +156,14 @@ function Register() {
           search={false}
           placeholder={"Şehir"}
         />
+        {formik.touched.city && (
+          <Text style={styles.errorText}>{formik.errors.city}</Text>
+        )}
         <CustomButton
           title="Giriş Yap"
           style={styles.submitButton}
-          onPress={handleSubmit}
+          onPress={formik.handleSubmit}
+          loading={isLoading}
         />
       </View>
     </ScrollView>
@@ -195,5 +213,8 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: GlobalStyles.colors.mainColor,
+  },
+  errorText: {
+    color: "red",
   },
 });

@@ -31,17 +31,17 @@ export const authSlice = createSlice({
       state.email = action.payload.email;
     },
     setLogin(state, action) {
-      state.isLoggedIn = true
-      state.token = action.payload.token
-      state.refreshToken = action.payload.refreshToken
-      state.email = action.payload.email
+      state.isLoggedIn = true;
+      state.token = action.payload.token;
+      state.refreshToken = action.payload.refreshToken;
+      state.email = action.payload.email;
     },
     logoutSuccess(state) {
       state.user = null;
       state.isLoggedIn = false;
       state.token = null;
       state.refreshToken = null;
-      console.log('Çıkış Başarılı')
+      console.log("Çıkış Başarılı");
     },
     setLoading(state, action) {
       state.isLoading = action.payload;
@@ -59,7 +59,7 @@ export const {
   setLoading,
 } = authSlice.actions;
 
-export const clearToken = () =>  (dispatch) => {
+export const clearToken = () => (dispatch) => {
   dispatch(logoutSuccess());
 };
 
@@ -67,7 +67,21 @@ export const getToken = () => (dispatch) => {};
 
 export const renewToken = () => (dispatch) => {};
 
-export const signUp = (data) => (dispatch) => {};
+export const signUp = (data) => async (dispatch) => {
+  try {
+    dispatch(setLoading(true));
+    const response = await AuthService.signUp(data);
+    console.log(response);
+    if (response.status === 200) {
+      console.log("Kayıt başarılı");
+      // return true
+    }
+  } catch (error) {
+    // Hata durumlarına göre işlemler
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
 
 export const login =
   (data, isFirstLogin = true) =>
@@ -78,10 +92,13 @@ export const login =
 
         const response = await AuthService.login(data);
         if (response.status === 200) {
-          console.log('Giriş başarılı')
+          console.log("Giriş başarılı");
           response.data.email = data.email;
           await AsyncStorage.setItem("token", response.data.token);
-          await AsyncStorage.setItem("refreshToken", response.data.refreshToken);
+          await AsyncStorage.setItem(
+            "refreshToken",
+            response.data.refreshToken
+          );
           await AsyncStorage.setItem("email", response.data.email);
           dispatch(loginSuccess(response.data));
         }
@@ -92,7 +109,7 @@ export const login =
           email: await AsyncStorage.getItem("email"),
         };
 
-        dispatch(setLogin(data))
+        dispatch(setLogin(data));
       }
     } catch (error) {
       // Hata durumlarına göre işlemler

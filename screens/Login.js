@@ -16,7 +16,7 @@ import { AntDesign } from "@expo/vector-icons";
 import CustomInput from "../components/CustomInput";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../store/authSlice";
-import validationSchemaLogin from "../utils/ValidationSchemaLogin";
+import loginValidationSchema from "../utils/LoginValidationSchema";
 import { useFormik } from "formik";
 
 function Login() {
@@ -31,7 +31,7 @@ function Login() {
       email: "",
       password: "",
     },
-    validationSchema: validationSchemaLogin,
+    validationSchema: loginValidationSchema,
     onSubmit: (values) => {
       dispatch(login(values));
     },

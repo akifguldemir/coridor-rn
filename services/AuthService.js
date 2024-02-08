@@ -1,10 +1,11 @@
 import { BaseService } from "./BaseServices";
 
-const SIGNUP = '/register'
+const SIGNUP = '/users/register'
 const LOGIN = '/login'
 
 class AuthService extends BaseService {
   signUp(formData) {
+    console.log(formData)
     return this.post(SIGNUP, formData);
   }
   login (formData) {
