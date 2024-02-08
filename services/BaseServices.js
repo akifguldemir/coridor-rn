@@ -63,9 +63,9 @@ export class BaseService {
       response.message ||
       response.toString();
     if (resultMessage === "[object Object]") return;
-    console.log(resultMessage)
     Toast.show({
-      type: "success",
+      type: "error",
+      text1: 'Başarılı',
       text2: resultMessage,
     });
   }
@@ -93,7 +93,8 @@ export class BaseService {
     ) {
       Toast.show({
         type: "error",
-        text1: errorMessage,
+        text1: 'Hata',
+        text2: errorMessage,
       });
       // lastErrorMessage = errorMessage
     } else {

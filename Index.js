@@ -12,7 +12,7 @@ import Toast from "react-native-toast-message";
 import { useEffect } from "react";
 import { login } from "./store/authSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { toastConfig } from "./utils/ToastConfig";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -70,7 +70,7 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
-      <Toast />
+      <Toast config={toastConfig}/>
     </>
   );
 }
@@ -82,4 +82,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  test: {
+    backgroundColor: 'yellow'
+  }
 });
