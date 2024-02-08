@@ -1,6 +1,7 @@
 /* eslint-disable */
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import { UseSelector } from "react-redux";
 
 const lastErrorMessage = "";
 
@@ -65,10 +66,11 @@ export class BaseService {
     if (resultMessage === "[object Object]") return;
     Toast.show({
       type: "error",
-      text1: 'Başarılı',
+      text1: "Başarılı",
       text2: resultMessage,
     });
   }
+
   handleError(error) {
     console.log(error);
     let errorMessage = "Undefined error!";
@@ -93,7 +95,7 @@ export class BaseService {
     ) {
       Toast.show({
         type: "error",
-        text1: 'Hata',
+        text1: "Hata",
         text2: errorMessage,
       });
       // lastErrorMessage = errorMessage
@@ -102,16 +104,28 @@ export class BaseService {
     }
     return error;
   }
+
   getFullPath(path) {
     return BASE_URL + path;
   }
+
+  getHeaders() {
+    const token = useSelector((state) => state.auth.token);
+
+    let headers = { "Content-Type": "application-json" };
+    if (undefined !== token && token !== null) {
+      headers = {
+        ...headers,
+        ...{ Authorization: `Bearer ${token}` },
+      };
+      return { headers };
+    }
+    return headers;
+  }
+
   get(path) {
     return axios
-      .get(this.getFullPath(path), {
-        headers: {
-          "content-type": "application/json",
-        },
-      })
+      .get(this.getFullPath(path), this.getHeaders())
       .then(function (response) {
         return response;
       })
@@ -123,20 +137,18 @@ export class BaseService {
         // always executed
       });
   }
-  post(path, formData, options = {handleSuccess: true, handleError: true}) {
+  post(path, formData, options = { handleSuccess: true, handleError: true }) {
     return axios
-      .post(this.getFullPath(path), formData, {
-        headers: {
-          "content-type": "application/json",
-        },
-      })
+      .post(this.getFullPath(path), formData, this.getHeaders())
       .then(
         (response) => {
-          if(undefined!== options.handleSuccess && options.handleSuccess) this.handleSuccess(response)
+          if (undefined !== options.handleSuccess && options.handleSuccess)
+            this.handleSuccess(response);
           return response;
         },
         (error) => {
-          if(undefined!== options.handleError && options.handleError) this.handleError(error)
+          if (undefined !== options.handleError && options.handleError)
+            this.handleError(error);
           return error;
         }
       )
