@@ -9,7 +9,7 @@ import {
   Linking,
 } from "react-native";
 import { GlobalStyles } from "../constants/styles";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
