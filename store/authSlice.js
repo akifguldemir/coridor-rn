@@ -92,7 +92,6 @@ export const login =
 
         const response = await AuthService.login(data);
         if (response.status === 200) {
-          console.log("Giriş başarılı");
           response.data.email = data.email;
           await AsyncStorage.setItem("token", response.data.token);
           await AsyncStorage.setItem(
@@ -101,6 +100,7 @@ export const login =
           );
           await AsyncStorage.setItem("email", response.data.email);
           dispatch(loginSuccess(response.data));
+          return { success: true };
         }
       } else {
         const data = {

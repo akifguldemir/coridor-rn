@@ -12,8 +12,8 @@ import registerValidationSchema from "../utils/RegisterValidationSchema";
 import { useNavigation } from "@react-navigation/native";
 
 const gender = [
-  { key: "1", value: "Female" },
-  { key: "2", value: "Male" },
+  { key: "1", value: "Erkek" },
+  { key: "2", value: "Kadın" },
 ];
 
 function Register() {
