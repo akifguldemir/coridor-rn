@@ -1,21 +1,21 @@
 import { View, Text, Button } from "react-native";
 import { useDispatch } from "react-redux";
-import { clearToken } from "../store/authSlice";
+import { logout } from "../store/authSlice";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function FirstMission() {
   dispatch = useDispatch();
 
-  const logout = async () => {
+  const userLogout = async () => {
     await AsyncStorage.removeItem("token");
-    dispatch(clearToken());
+    dispatch(logout());
   };
 
   return (
     <View>
       <Text>First Mission</Text>
-      <Button onPress={logout} title="Çıkış"></Button>
+      <Button onPress={userLogout} title="Çıkış"></Button>
     </View>
   );
 }

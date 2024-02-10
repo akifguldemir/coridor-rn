@@ -32,8 +32,11 @@ function Login() {
       password: "",
     },
     validationSchema: loginValidationSchema,
-    onSubmit: (values) => {
+    onSubmit:  (values) => {
       dispatch(login(values));
+      // if (result.success) {
+      //  //direction api
+      // }
     },
   });
 
@@ -70,7 +73,7 @@ function Login() {
             onBlur: formik.handleBlur('email')
           }}
         />
-      {formik.touched.email && <Text style={styles.errorText}>{formik.errors.email}</Text>}
+      {formik.touched.email && formik.errors.email && <Text style={styles.errorText}>{formik.errors.email}</Text>}
         <CustomInput
           style={styles.input}
           placeholder="Şifre"
@@ -81,7 +84,7 @@ function Login() {
             onBlur: formik.handleBlur('password'),
           }}
         />
-      {formik.touched.password && <Text style={styles.errorText}>{formik.errors.password}</Text>}
+      {formik.touched.password && formik.errors.password &&<Text style={styles.errorText}>{formik.errors.password}</Text>}
       </View>
       <Text style={styles.forgotPasswordText}>Şifremi Unuttum</Text>
       <CustomButton

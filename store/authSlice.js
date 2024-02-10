@@ -59,7 +59,7 @@ export const {
   setLoading,
 } = authSlice.actions;
 
-export const clearToken = () => (dispatch) => {
+export const logout = () => (dispatch) => {
   dispatch(logoutSuccess());
 };
 
